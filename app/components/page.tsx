@@ -30,6 +30,7 @@ export default function CryptoRates() {
       ADA: 0,
     },
   });
+
   useEffect(() => {
     fetch(`http://api.coinlayer.com/live?access_key=${API_KEY}`)
       .then((response) => response.json())
