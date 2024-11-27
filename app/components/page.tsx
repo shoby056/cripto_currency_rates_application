@@ -7,7 +7,7 @@ export default function CryptoRates(){
     // const API_KEY = "3251945b5f95ea3a9162dfb71217145c";
     const API_KEY = "5068db716bc1b9f4fa6963de4c5d4269";
 
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState(null);
     useEffect(() => {
       fetch(`http://api.coinlayer.com/live?access_key=${API_KEY}`)
         .then((response) => response.json())
