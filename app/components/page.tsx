@@ -14,11 +14,15 @@ export default function CryptoRates() {
   const [rates, setRates] = useState<Rates | null>(null);
 
   useEffect(() => {
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,tether,cardano,dogecoin&vs_currencies=usd"
-    )
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,tether,cardano,dogecoin&vs_currencies=usd"
+        );
+        const data = await response.json();
+
+        console.log("Fetched Rates:", data);
+
         setRates({
           BTC: data.bitcoin.usd,
           ETH: data.ethereum.usd,
@@ -27,7 +31,12 @@ export default function CryptoRates() {
           DOGE: data.dogecoin.usd,
           ADA: data.cardano.usd,
         });
-      });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -52,27 +61,27 @@ export default function CryptoRates() {
             <tbody>
               <tr>
                 <td>BTC</td>
-                <td>{rates?.BTC}</td>
+                <td>{rates?.BTC ?? "Loading..."}</td>
               </tr>
               <tr>
                 <td>ETH</td>
-                <td>{rates?.ETH}</td>
+                <td>{rates?.ETH ?? "Loading..."}</td>
               </tr>
               <tr>
                 <td>BNB</td>
-                <td>{rates?.BNB}</td>
+                <td>{rates?.BNB ?? "Loading..."}</td>
               </tr>
               <tr>
                 <td>USDT</td>
-                <td>{rates?.USDT}</td>
+                <td>{rates?.USDT ?? "Loading..."}</td>
               </tr>
               <tr>
                 <td>DOGE</td>
-                <td>{rates?.DOGE}</td>
+                <td>{rates?.DOGE ?? "Loading..."}</td>
               </tr>
               <tr>
                 <td>ADA</td>
-                <td>{rates?.ADA}</td>
+                <td>{rates?.ADA ?? "Loading..."}</td>
               </tr>
             </tbody>
           </table>
